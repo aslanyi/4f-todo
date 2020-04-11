@@ -1,12 +1,10 @@
-import { firebaseInit } from '../firebase';
+import { firebaseInit } from '../../firebase';
 
-const MyApp = ({pageProps, Component}) => {
-    return (
-        <Component {...pageProps}  />
-    )
+const MyApp = ({ pageProps, Component }) => {
+    return <Component {...pageProps} />;
 };
 
-MyApp.getInitialProps = async ({ctx, Component}) => {
+MyApp.getInitialProps = async ({ ctx, Component }) => {
     firebaseInit();
     let pageProps = {};
     if (Component.getInitialProps) {

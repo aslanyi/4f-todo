@@ -5,8 +5,10 @@ class User {
     async getUser() {
         const user = [];
         if (this.firestore) {
-            const querySnapshot = await this.firestore.collection('users').get();
-            querySnapshot.forEach(doc => {
+            const querySnapshot = await this.firestore
+                .collection('users')
+                .get();
+            querySnapshot.forEach((doc) => {
                 user.push(doc.data());
             });
         }

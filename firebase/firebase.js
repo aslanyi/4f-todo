@@ -1,5 +1,5 @@
-const firebase = require("firebase");
-require("firebase/firestore");
+const firebase = require('firebase');
+require('firebase/firestore');
 
 const firebaseInit = () => {
     if (!firebase.apps.length) {
@@ -13,7 +13,4 @@ const getFirestore = () => {
     return null;
 };
 
-export {
-    firebaseInit,
-    getFirestore
-};
+export { firebaseInit, getFirestore };

@@ -1,20 +1,25 @@
-import Link from "next/link";
-import {getFirestore, User} from "../firebase";
+import Link from 'next/link';
+import { PropTypes } from 'prop-types';
+import { getFirestore, User } from '../../firebase';
 
-const Home = ({ users })  => {
+const Home = ({ users }) => {
     return (
         <div>
             <ul>
-                {
-                    users.map(user => <li>{user.name}</li>)
-                }
+                {users.map((user, index) => (
+                    <li key={index}>{user.name}</li>
+                ))}
             </ul>
             {/*<button onClick={handleAddData}>ADD ME</button>*/}
             <Link href={'/about'}>
                 <a>About</a>
             </Link>
         </div>
-    )
+    );
+};
+
+Home.propTypes = {
+    users: PropTypes.array,
 };
 
 Home.getInitialProps = async () => {
