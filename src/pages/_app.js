@@ -1,7 +1,13 @@
+import { Provider } from 'react-redux';
+import { store } from '../store';
 import { firebaseInit } from '../../firebase';
 
 const MyApp = ({ pageProps, Component }) => {
-    return <Component {...pageProps} />;
+    return (
+        <Provider store={store}>
+            <Component {...pageProps} />;
+        </Provider>
+    );
 };
 
 MyApp.getInitialProps = async ({ ctx, Component }) => {

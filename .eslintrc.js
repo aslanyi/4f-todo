@@ -11,7 +11,9 @@ module.exports = {
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
-        "React": "writable"
+        "React": "writable",
+        "require": true,
+        "process": true,
     },
     "parserOptions": {
         "ecmaFeatures": {
@@ -28,12 +30,12 @@ module.exports = {
     "rules": {
         "semi":["error", "always"],
         "quotes": ["error", "single"],
-        "indent": ["error", 4],
+        // "indent": ["error", 4],
         "prefer-const": "error",
         "comma-dangle": ["error", "always-multiline"],
         "prettier/prettier": ["error"],
         "react/react-in-jsx-scope": "off",
         "no-debugger": 2,
-        "linebreak-style": ["error", "unix"]
+        "linebreak-style": ["error", "unix"],
     }
 };

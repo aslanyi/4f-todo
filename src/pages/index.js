@@ -1,8 +1,16 @@
 import Link from 'next/link';
+import { connect } from 'react-redux';
+import { getUser } from '../redux/actions';
+import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
 import { getFirestore, User } from '../../firebase';
 
-const Home = ({ users }) => {
+const Home = ({ users, getUser, user }) => {
+    const setUser = () => {
+        console.log(user);
+        getUser(users[0]);
+    };
+
     return (
         <div>
             <ul>
@@ -10,10 +18,11 @@ const Home = ({ users }) => {
                     <li key={index}>{user.name}</li>
                 ))}
             </ul>
-            {/*<button onClick={handleAddData}>ADD ME</button>*/}
+            <button onClick={setUser}>Select ME</button>
             <Link href={'/about'}>
                 <a>About</a>
             </Link>
+            <h1>Selected UserName: {user ? user.name : ''} </h1>
         </div>
     );
 };
@@ -31,4 +40,12 @@ Home.getInitialProps = async () => {
     return { users };
 };
 
-export default Home;
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ getUser }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
