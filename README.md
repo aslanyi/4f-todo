@@ -1,2 +1,2 @@
 # 4f-todo
-Todolist for everyone
+Todolist application for everyone
