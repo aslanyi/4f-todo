@@ -1,7 +1,8 @@
+import Icon from '../utils/icon';
 const About = () => {
     return (
         <div>
-            <h1>About</h1>
+            <Icon icon="office" />
         </div>
     );
 };

@@ -1,5 +1,5 @@
-const firebase = require('firebase');
-require('firebase/firestore');
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const firebaseInit = () => {
     if (!firebase.apps.length) {
