@@ -25,16 +25,18 @@ module.exports = {
     "parser": "babel-eslint",
     "plugins": [
         "react",
-        "prettier"
+        "prettier",
+        "react-hooks"
     ],
     "rules": {
         "semi":["error", "always"],
         "quotes": ["error", "single"],
-        //"indent": ["error", 4],
         "prefer-const": "error",
         "comma-dangle": ["error", "always-multiline"],
         "react/react-in-jsx-scope": "off",
         "no-debugger": 2,
         "linebreak-style": ["error", "windows"],
+        "react-hooks/rules-of-hooks": "error", 
+        "react-hooks/exhaustive-deps": "warn"
     }
 };
