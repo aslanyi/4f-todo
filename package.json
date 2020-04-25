@@ -29,6 +29,7 @@
   "dependencies": {
     "firebase": "^7.14.0",
     "next": "^9.3.4",
+    "next-redux-wrapper": "^6.0.0-rc.8",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

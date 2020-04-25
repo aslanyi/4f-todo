@@ -3,6 +3,7 @@ import { store } from '../store';
 import { firebaseInit } from '../../firebase';
 import { ThemeProvider } from 'styled-components';
 import { Normalize } from 'styled-normalize';
+import { createWrapper } from 'next-redux-wrapper';
 
 const theme = {
     primaryColor: '#0DA5F3',
@@ -33,4 +34,8 @@ MyApp.getInitialProps = async ({ ctx, Component }) => {
     return { pageProps };
 };
 
-export default MyApp;
+const makeStore = () => store;
+
+const wrapper = createWrapper(makeStore);
+
+export default wrapper.withRedux(MyApp);
