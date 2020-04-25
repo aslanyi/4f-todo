@@ -2,7 +2,7 @@ import Icon from '../utils/icon';
 const About = () => {
     return (
         <div>
-            <Icon icon="home" />
+            <Icon icon="office" />
         </div>
     );
 };
