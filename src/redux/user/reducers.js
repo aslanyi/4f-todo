@@ -1,10 +1,12 @@
 import { GET_USER, UPDATE_USER } from './types';
 
 const initialState = {
+    id: '',
     name: '',
     surname: '',
     mail: '',
     photoUrl: '',
+    todos: [],
 };
 
 export function user(state = initialState, action) {
