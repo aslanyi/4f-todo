@@ -1,9 +1,9 @@
 import { Provider } from 'react-redux';
-import { store } from '../store';
 import { firebaseInit } from '../../firebase';
 import { ThemeProvider } from 'styled-components';
 import { Normalize } from 'styled-normalize';
-import { createWrapper } from 'next-redux-wrapper';
+import withRedux from 'next-redux-wrapper';
+import { makeStore } from '../store';
 
 const theme = {
     primaryColor: '#0DA5F3',
@@ -14,7 +14,7 @@ const theme = {
     darkTertiaryColor: '',
 };
 
-const MyApp = ({ pageProps, Component }) => {
+const MyApp = ({ pageProps, Component, store }) => {
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme}>
@@ -34,8 +34,4 @@ MyApp.getInitialProps = async ({ ctx, Component }) => {
     return { pageProps };
 };
 
-const makeStore = () => store;
-
-const wrapper = createWrapper(makeStore);
-
-export default wrapper.withRedux(MyApp);
+export default withRedux(makeStore)(MyApp);
