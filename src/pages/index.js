@@ -1,14 +1,6 @@
-import { useEffect } from 'react';
-import { getFirestore, FirebaseHelper } from '../../firebase';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Wrapper } from '../styles/home/styled';
-import { USERS } from '../../firebase/constans';
-import { updateUser } from '../redux/actions';
 
 const Home = (props) => {
-
-    console.log(props);
     return (
         <Wrapper>
             <h1>
@@ -28,19 +20,8 @@ const Home = (props) => {
 Home.propTypes = {};
 
 Home.getInitialProps = async ({ store }) => {
-    const fbHelper = new FirebaseHelper(getFirestore());
-    const userId = await fbHelper.addDoc(USERS, { name: 'Taha' });
-    const user = await fbHelper.getDoc(USERS, userId);
-    store.dispatch({type: 'UPDATE_USER', payload: {name: 'AYŞE'}});
-    return { user };
+    return {};
 };
 
-const mapStateToProps = (state) => ({
-    user: state.user,
-});
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ updateUser }, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

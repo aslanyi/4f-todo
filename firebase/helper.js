@@ -1,30 +1,4 @@
-import { USERS } from './constans';
-
-class User {
-    constructor(firestore) {
-        this.firestore = firestore;
-    }
-
-    async getUser() {
-        const user = [];
-        if (this.firestore) {
-            const querySnapshot = await this.firestore.collection(USERS).get();
-            querySnapshot.forEach((doc) => {
-                user.push(doc.data());
-            });
-        }
-        return user;
-    }
-
-    async addUser(user) {
-        let isAdded = false;
-        if (this.firestore) {
-            isAdded = await this.firestore.collection(USERS).add(user);
-        }
-
-        return isAdded;
-    }
-}
+//TODO singleton
 
 /**
  * Represent a helper for manage data
@@ -36,55 +10,62 @@ function FirebaseHelper(firestore) {
     /**
      * @param {string} collectionName
      * @param {array} data
+     * @return {object} obj
      * */
     const addDoc = async (collectionName, data) => {
-        let id = '';
+        let obj = {};
         try {
             if (firestore) {
                 const docRef = await firestore.collection(collectionName).add(data);
-                id = docRef.id;
+                const docData = await docRef.get();
+                obj = { id: docRef.id, ...docData.data() };
             }
         } catch (e) {
             console.log(e);
         }
-        return id;
+        return obj;
     };
 
     /**
      * @param {string} collectionName
      * @param {string} docName
      * @param {object} data
+     * @return {boolean} isUpdated
      * */
     const updateDoc = async (collectionName, docName, data) => {
-        let isAdded = false;
+        let isUpdated = true;
         try {
             if (firestore) {
-                isAdded = await firestore.collection(collectionName).doc(docName).update(data);
+                await firestore.collection(collectionName).doc(docName).update(data);
             }
         } catch (e) {
             console.log(e);
+            isUpdated = false;
         }
-        return isAdded;
+        return isUpdated;
     };
 
     /**
      * @param {string} collectionName
      * @param {string} docName
+     * @return {boolean} isDeleted
      * */
     const deleteDoc = async (collectionName, docName) => {
-        let isDeleted = false;
+        let isDeleted = true;
         try {
             if (firestore) {
-                isDeleted = await firestore.collection(collectionName).doc(docName).delete();
+                await firestore.collection(collectionName).doc(docName).delete();
             }
         } catch (e) {
             console.log(e);
+            isDeleted = false;
         }
         return isDeleted;
     };
 
     /**
      * @param {string} collectionName
+     * @return {array} data
      * */
     const getCollection = async (collectionName) => {
         const data = [];
@@ -102,14 +83,15 @@ function FirebaseHelper(firestore) {
     /**
      * @param {string} collectionName
      * @param {string} docName
+     * @return {array} data
      * */
     const getDoc = async (collectionName, docName) => {
         let data = {};
         try {
             if (firestore) {
-                const doc = await firestore.collection(collectionName).doc(docName).get();
-                if (doc.exists) {
-                    data = doc.data();
+                const docRef = await firestore.collection(collectionName).doc(docName).get();
+                if (docRef.exists) {
+                    data =  { id: docRef.id, ...docRef.data() };
                 } else {
                     console.log('Doc is not found');
                 }
