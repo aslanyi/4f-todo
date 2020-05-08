@@ -1,5 +1,4 @@
 import { Provider } from 'react-redux';
-import { firebaseInit } from '../../firebase';
 import { ThemeProvider } from 'styled-components';
 import { Normalize } from 'styled-normalize';
 import withRedux from 'next-redux-wrapper';
@@ -26,7 +25,6 @@ const MyApp = ({ pageProps, Component, store }) => {
 };
 
 MyApp.getInitialProps = async ({ ctx, Component }) => {
-    firebaseInit();
     let pageProps = {};
     if (Component.getInitialProps) {
         pageProps = await Component.getInitialProps(ctx);

@@ -1,3 +1,3 @@
-import { getUser, updateUser } from './user/actions';
+import { getUser, updateUser, fetchUser } from './user/actions';
 
-export { getUser, updateUser };
+export { getUser, updateUser, fetchUser };
