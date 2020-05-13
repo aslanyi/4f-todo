@@ -4,18 +4,19 @@ import Icon from '../utils/icon';
 import PropTypes from 'prop-types';
 
 const BasicInput = styled.input`
-    width: 325px;
-    height: 50px;
+    width: 100%;
+    height: 5rem;
     color: ${(props) => props.theme.textColor};
     box-sizing: border-box;
     padding-top: 1.6rem;
     padding-bottom: 1.6rem;
-    padding-left: ${(props) => props.paddingLeft};
+    padding-left: 2.5rem;
     border: 1px solid ${(props) => props.theme.borderColor};
     border-radius: 5px;
-    font-family: 'SF UI Display Light';
+    font-family: ${(props) => props.theme.secondaryFont}, sans-serif;
     font-size: 1.3rem;
-    font-weight: normal;
+    font-style: normal;
+    font-weight: 300;
     line-height: 1.8rem;
 
     :hover {
@@ -29,11 +30,11 @@ const BasicInput = styled.input`
 
     ::placeholder {
         color: ${(props) => props.theme.placeholderColor};
-        font-family: 'SF UI Display Regular';
+        font-family: ${(props) => props.theme.secondaryFont};
     }
 
     ${(props) =>
-        props.isInvalid == true &&
+        props.isValid &&
         css`
             border: 1px solid ${(props) => props.theme.successColor};
             color: ${(props) => props.theme.successColor};
@@ -41,7 +42,7 @@ const BasicInput = styled.input`
         `};
 
     ${(props) =>
-        props.isInvalid == false &&
+        !props.isValid &&
         css`
             border: 1px solid ${(props) => props.theme.dangerColor};
             color: ${(props) => props.theme.dangerColor};
@@ -51,8 +52,7 @@ const BasicInput = styled.input`
     ${(props) =>
         props.searchInput &&
         css`
-            height: 60px;
-            width: 100%;
+            height: 6rem;
             border: 0;
             border-radius: 0px;
 
@@ -71,8 +71,8 @@ const Container = styled.div`
 `;
 
 const iconStyle = {
-    paddingLeft: '45px',
     position: 'absolute',
+    left: '17px',
     top: '50%',
     bottom: '50%',
     transform: 'translate(-50%, -50%)',
@@ -93,7 +93,7 @@ function Input(props) {
     return props.icon ? (
         <Container>
             <Icon icon={props.icon} size={props.iconSize} color={props.iconColor} style={iconStyle} />
-            <BasicInput paddingLeft="2.5rem" {...props} />
+            <BasicInput paddingLeft="2rem" {...props} />
         </Container>
     ) : (
         <BasicInput paddingLeft="2rem" {...props} />

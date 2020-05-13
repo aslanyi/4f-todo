@@ -17,6 +17,8 @@ const theme = {
     darkPrimaryColor: '',
     darkSecondaryColor: '',
     darkTertiaryColor: '',
+    primaryFont:'Poppins',
+    secondaryFont:'SF UI Display',
 };
 
 const MyApp = ({ pageProps, Component, store }) => {

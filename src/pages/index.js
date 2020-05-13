@@ -14,10 +14,10 @@ const Home = (props) => {
             </Wrapper>
             <Wrapper>Components</Wrapper>
             <div>
-                <Input placeholder="Validation true basic" isInvalid={true} />
-                <Input placeholder="Validation false with icon" isInvalid={false} icon="home" />
-                <Input placeholder="With icon" icon="home" />
-                <Input placeholder="Search input w-100" icon="search" searchInput />
+                <Input placeholder="Validation true basic" isValid={true} />
+                <Input placeholder="With icon" icon="home" isValid={undefined} />
+                <Input placeholder="Search input w-100" icon="search" searchInput isValid={undefined} />
+                <Input placeholder="Validation false with icon" isValid={false} icon="home" />
             </div>
         </Fragment>
     );
