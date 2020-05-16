@@ -1,13 +1,10 @@
-//TODO singleton
-
 /**
  * Represent a helper for manage data
  * @constructor
  * @param {object} firestore
  * @param {object} auth
  * */
-function FirebaseHelper(firestore, auth) {  
-
+function FirebaseHelper(firestore, auth) {
     /**
      * @param {string} collectionName
      * @param {array} data
@@ -170,5 +167,23 @@ function FirebaseHelper(firestore, auth) {
         registerUserWithEmailPassword,
     };
 }
+
+FirebaseHelper.singleton = (() => {
+    let instance;
+    function createInstance(firestore, auth) {
+        const object = new FirebaseHelper(firestore, auth);
+        return object;
+    }
+ 
+    return {
+        getInstance: function (firestore, auth) {
+            if (!instance) {
+                instance = createInstance(firestore, auth);
+            }
+            return instance;
+        },
+    };
+})();
+
 
 export default FirebaseHelper;

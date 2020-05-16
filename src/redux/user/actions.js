@@ -10,7 +10,7 @@ export const getUser = (user) => {
 };
 
 export const fetchUser = () => {
-    const firebaseHelper = new FirebaseHelper(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const state = getState();
@@ -23,7 +23,7 @@ export const fetchUser = () => {
 };
 
 export const updateUser = (user) => {
-    const firebaseHelper = new FirebaseHelper(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
     return async (dispatch) => {
         try {
             const isUpdated = await firebaseHelper.update(collectionName.USERS, user.id, user);
@@ -35,7 +35,7 @@ export const updateUser = (user) => {
 };
 
 export const loginUserWithEmail = (email, password) => {
-    const firebaseHelper = new FirebaseHelper(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
     return async (dispatch) => {
         try {
             const user = await firebaseHelper.loginUserWithEmailPassword(email, password);
@@ -56,7 +56,7 @@ export const loginUserWithEmail = (email, password) => {
 };
 
 export const loginUserWithProvider = (provider) => {
-    const firebaseHelper = new FirebaseHelper(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
     return async (dispatch) => {
         try {
             const user = await firebaseHelper.loginUserWithProvider(provider);
@@ -77,7 +77,7 @@ export const loginUserWithProvider = (provider) => {
 };
 
 export const registerUserWithEmail = (email, password) => {
-    const firebaseHelper = new FirebaseHelper(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
     return async (dispatch) => {
         try {
             const isRegistered = await firebaseHelper.registerUserWithEmailPassword(email, password);
