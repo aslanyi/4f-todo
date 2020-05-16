@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Icon from '../utils/icon';
+import Icon from '../../utils/icon';
 import PropTypes from 'prop-types';
 
 const BasicInput = styled.input`
