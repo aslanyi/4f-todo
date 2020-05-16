@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { getAuth } from '../../../firebase';
+import { useDispatch } from 'react-redux';
+import { registerUserWithEmail } from '../../redux/actions';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const dispatch = useDispatch();
     const handleInputChange = (e) => {
         const name = e.target.name;
         switch (name) {
@@ -18,13 +20,7 @@ const Register = () => {
     };
 
     const registerUser = async () => {
-        try {
-           const { user } = await getAuth().createUserWithEmailAndPassword(email, password);
-           await user.sendEmailVerification({ url: 'localhost:3000' });
-        } catch (e) {
-            console.log(e);
-        }
-
+        dispatch(await registerUserWithEmail(email, password));
     };
     return (
         <div>

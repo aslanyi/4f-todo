@@ -4,8 +4,9 @@
  * Represent a helper for manage data
  * @constructor
  * @param {object} firestore
+ * @param {object} auth
  * */
-function FirebaseHelper(firestore) {
+function FirebaseHelper(firestore, auth) {  
 
     /**
      * @param {string} collectionName
@@ -91,7 +92,7 @@ function FirebaseHelper(firestore) {
             if (firestore) {
                 const docRef = await firestore.collection(collectionName).doc(docName).get();
                 if (docRef.exists) {
-                    data =  { id: docRef.id, ...docRef.data() };
+                    data = { id: docRef.id, ...docRef.data() };
                 } else {
                     console.log('Doc is not found');
                 }
@@ -102,12 +103,71 @@ function FirebaseHelper(firestore) {
         return data;
     };
 
+    /**
+     * @param {string} email
+     * @param {string} password
+     * @return {object} data
+     * */
+    const loginUserWithEmailPassword = async (email, password) => {
+        let data = {};
+        try {
+            if (auth) {
+                const { user } = await auth.signInWithEmailAndPassword(email, password);
+                data = user;
+            }
+        } catch (e) {
+            throw new Error(e.message);
+        }
+        return data;
+    };
+
+    /**
+     * @param {object} provider
+     * @return {object} data
+     * */
+    const loginUserWithProvider = async (provider) => {
+        let data = {};
+        try {
+            if (auth) {
+                const { user } = await auth.signInWithPopup(provider);
+                data = user;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        return data;
+    };
+
+    /**
+     * @param {string} email
+     * @param {string} password
+     * @return {boolean} registered
+     * */
+    const registerUserWithEmailPassword = async (email, password) => {
+        let registered = false;
+        try {
+            if (auth) {
+                const { user } = await auth.createUserWithEmailAndPassword(email, password);
+                registered = true;
+                await user.sendEmailVerification(); // We have to send redirect url but we cant try this with localhost.
+            }
+        } catch (e) {
+            registered = false;
+            console.error(e);
+        }
+        return registered;
+    };
+
+
     return {
         addDoc,
         getDoc,
         updateDoc,
         deleteDoc,
         getCollection,
+        loginUserWithEmailPassword,
+        loginUserWithProvider,
+        registerUserWithEmailPassword,
     };
 }
 

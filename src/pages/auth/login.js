@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { getAuth, firebase } from '../../../firebase';
+import { useDispatch } from 'react-redux';
+import { loginUserWithEmail, loginUserWithProvider } from '../../redux/actions';
+import { GoogleAuthProvider } from '../../../firebase/providers';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const handleInputChange = (e) => {
         const name = e.target.name;
@@ -18,33 +21,12 @@ const Login = () => {
     };
 
     const loginUser = async () => {
-        try {
-           const { user } = await getAuth().signInWithEmailAndPassword(email, password);
-        } catch (e) {
-            console.log(e.message);
-        }
+        dispatch(await loginUserWithEmail(email, password));
     };
 
     const loginUserWithGoogleAuth = async () => {
-        try {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            const { user } = await getAuth().signInWithPopup(provider);
-            console.log(user);
-        } catch (e) {
-            console.log(e.message);
-        }
+        dispatch(await loginUserWithProvider(GoogleAuthProvider));
     };
-
-
-    const loginUserWithFacebookAuth = async () => {
-        try {
-            const provider = new firebase.auth.FacebookAuthProvider();
-            const { user } = await getAuth().signInWithPopup(provider);
-            console.log(user);
-        } catch(e) {
-            console.log(e.message);
-        }
-    }
 
     return (
         <div>
@@ -54,7 +36,6 @@ const Login = () => {
             <input type="password" name="password" onChange={handleInputChange}/>
             <button onClick={() => loginUser()}>Sign In User</button>
             <button onClick={() => loginUserWithGoogleAuth()}>Sign In With Google</button>
-            <button onClick={() => loginUserWithFacebookAuth()}>Sign In With Facebook</button>
         </div>
     );
 };
