@@ -1,6 +1,7 @@
 import * as types from './types';
-import { FirebaseHelper, getAuth, getFirestore } from '../../../firebase';
+import { FirebaseHelper, getAuth, getFirestore, errorMessages } from '../../../firebase';
 import * as collectionName from '../../../firebase/constans';
+import { setError } from '../actions';
 
 export const getUser = (user) => {
     return {
@@ -16,28 +17,32 @@ export const fetchUser = () => {
             const state = getState();
             const user = await firebaseHelper.getDoc(collectionName.USERS, state.user.id);
             dispatch(getUser(user));
+            if (state.error.message) dispatch({ type: 'CLEAR_ERROR' });
         } catch (error) {
-            console.error(error);
+            dispatch(setError({ message: errorMessages[error.message] }));
         }
     };
 };
 
 export const updateUser = (user) => {
     const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
+            const { error } = getState();
             const isUpdated = await firebaseHelper.update(collectionName.USERS, user.id, user);
             if (isUpdated) fetchUser();
+            if (error.message) dispatch({ type: 'CLEAR_ERROR' });
         } catch (error) {
-            console.error(error);
+            dispatch(setError({ message: errorMessages[error.message] }));
         }
     };
 };
 
 export const loginUserWithEmail = (email, password) => {
     const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
+            const { error } = getState();
             const user = await firebaseHelper.loginUserWithEmailPassword(email, password);
             if (Object.keys(user).length > 0) {
                 const userData = {
@@ -48,17 +53,19 @@ export const loginUserWithEmail = (email, password) => {
                     emailVerified: user.emailVerified,
                 };
                 dispatch(getUser(userData));
+                if (error.message) dispatch({ type: 'CLEAR_ERROR' });
             }
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            dispatch(setError({ message: errorMessages[error.message] }));
         }
     };
 };
 
 export const loginUserWithProvider = (provider) => {
     const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
+            const { error } = getState();
             const user = await firebaseHelper.loginUserWithProvider(provider);
             if (Object.keys(user).length > 0) {
                 const userData = {
@@ -69,21 +76,24 @@ export const loginUserWithProvider = (provider) => {
                     emailVerified: user.emailVerified,
                 };
                 dispatch(getUser(userData));
+                if (error.message) dispatch({ type: 'CLEAR_ERROR' });
             }
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            dispatch(setError({ message: errorMessages[error.message] }));
         }
     };
 };
 
 export const registerUserWithEmail = (email, password) => {
     const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
+            const { error } = getState();
             const isRegistered = await firebaseHelper.registerUserWithEmailPassword(email, password);
             console.log(isRegistered);
-        } catch (e) {
-            console.error(e);
+            if (error.message) dispatch({ type: 'CLEAR_ERROR' });
+        } catch (error) {
+            dispatch(setError({ message: errorMessages[error.message] }));
         }
     };
 };
