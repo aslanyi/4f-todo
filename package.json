@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "next start",
     "build": "next build",
-    "dev": "next"
+    "dev": "next",
+    "storybook": "start-storybook"
   },
   "repository": {
     "type": "git",
@@ -45,7 +46,9 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
+    "@storybook/react": "^5.3.18",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
