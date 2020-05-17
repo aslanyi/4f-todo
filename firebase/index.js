@@ -1,3 +1,3 @@
-import { firebaseInit, getFirestore } from './firebase';
+import { firebaseInit, getFirestore, getAuth, firebase } from './firebase';
 import FirebaseHelper from './helper';
-export { firebaseInit, getFirestore, FirebaseHelper };
+export { firebaseInit, getFirestore, getAuth, firebase, FirebaseHelper };

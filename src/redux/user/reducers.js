@@ -4,9 +4,12 @@ const initialState = {
     id: '',
     name: '',
     surname: '',
-    mail: '',
-    photoUrl: '',
+    email: '',
+    emailVerified: false,
+    photoURL: '',
     todos: [],
+    token: '',
+    categories: [],
 };
 
 export function user(state = initialState, action) {
