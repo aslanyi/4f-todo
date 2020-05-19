@@ -8,7 +8,7 @@ function FirebaseHelper(firestore, auth) {
     /**
      * @param {string} collectionName
      * @param {array} data
-     * @return {object} obj
+     * @returns {object} obj
      * */
     const addDoc = async (collectionName, data) => {
         let obj = {};
@@ -19,7 +19,7 @@ function FirebaseHelper(firestore, auth) {
                 obj = { id: docRef.id, ...docData.data() };
             }
         } catch (e) {
-            console.log(e);
+            throw new Error(e.code);
         }
         return obj;
     };
@@ -28,7 +28,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {string} collectionName
      * @param {string} docName
      * @param {object} data
-     * @return {boolean} isUpdated
+     * @returns {boolean} isUpdated
      * */
     const updateDoc = async (collectionName, docName, data) => {
         let isUpdated = true;
@@ -37,8 +37,8 @@ function FirebaseHelper(firestore, auth) {
                 await firestore.collection(collectionName).doc(docName).update(data);
             }
         } catch (e) {
-            console.log(e);
             isUpdated = false;
+            throw new Error(e.code);
         }
         return isUpdated;
     };
@@ -46,7 +46,7 @@ function FirebaseHelper(firestore, auth) {
     /**
      * @param {string} collectionName
      * @param {string} docName
-     * @return {boolean} isDeleted
+     * @returns {boolean} isDeleted
      * */
     const deleteDoc = async (collectionName, docName) => {
         let isDeleted = true;
@@ -55,15 +55,15 @@ function FirebaseHelper(firestore, auth) {
                 await firestore.collection(collectionName).doc(docName).delete();
             }
         } catch (e) {
-            console.log(e);
             isDeleted = false;
+            throw new Error(e.code);
         }
         return isDeleted;
     };
 
     /**
      * @param {string} collectionName
-     * @return {array} data
+     * @returns {array} data
      * */
     const getCollection = async (collectionName) => {
         const data = [];
@@ -73,7 +73,7 @@ function FirebaseHelper(firestore, auth) {
                 querySnapshot.forEach((doc) => (data.push(doc.data())));
             }
         } catch (e) {
-            console.log(e);
+            throw new Error(e.code);
         }
         return data;
     };
@@ -81,7 +81,7 @@ function FirebaseHelper(firestore, auth) {
     /**
      * @param {string} collectionName
      * @param {string} docName
-     * @return {array} data
+     * @returns {array} data
      * */
     const getDoc = async (collectionName, docName) => {
         let data = {};
@@ -95,7 +95,7 @@ function FirebaseHelper(firestore, auth) {
                 }
             }
         } catch (e) {
-            console.log(e);
+            throw new Error(e.code);
         }
         return data;
     };
@@ -103,7 +103,7 @@ function FirebaseHelper(firestore, auth) {
     /**
      * @param {string} email
      * @param {string} password
-     * @return {object} data
+     * @returns {object} data
      * */
     const loginUserWithEmailPassword = async (email, password) => {
         let data = {};
@@ -113,14 +113,14 @@ function FirebaseHelper(firestore, auth) {
                 data = user;
             }
         } catch (e) {
-            throw new Error(e.message);
+            throw new Error(e.code);
         }
         return data;
     };
 
     /**
      * @param {object} provider
-     * @return {object} data
+     * @returns {object} data
      * */
     const loginUserWithProvider = async (provider) => {
         let data = {};
@@ -130,7 +130,7 @@ function FirebaseHelper(firestore, auth) {
                 data = user;
             }
         } catch (e) {
-            console.error(e);
+            throw new Error(e.code);
         }
         return data;
     };
@@ -138,7 +138,7 @@ function FirebaseHelper(firestore, auth) {
     /**
      * @param {string} email
      * @param {string} password
-     * @return {boolean} registered
+     * @returns {boolean} registered
      * */
     const registerUserWithEmailPassword = async (email, password) => {
         let registered = false;
@@ -150,7 +150,7 @@ function FirebaseHelper(firestore, auth) {
             }
         } catch (e) {
             registered = false;
-            console.error(e);
+            throw new Error(e.code);
         }
         return registered;
     };
