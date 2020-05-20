@@ -3,6 +3,8 @@ import { ThemeProvider } from 'styled-components';
 import { Normalize } from 'styled-normalize';
 import withRedux from 'next-redux-wrapper';
 import { makeStore } from '../store';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const theme = {
     primaryColor: '#0DA5F3',
@@ -16,17 +18,20 @@ const theme = {
     darkPrimaryColor: '',
     darkSecondaryColor: '',
     darkTertiaryColor: '',
-    primaryFont:'Poppins',
-    secondaryFont:'SF UI Display',
+    primaryFont: 'Poppins',
+    secondaryFont: 'SF UI Display',
 };
 
 const MyApp = ({ pageProps, Component, store }) => {
+    const persistor = persistStore(store);
     return (
         <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <Normalize />
-                <Component {...pageProps} />
-            </ThemeProvider>
+            <PersistGate loading={null} persistor={persistor}>
+                <ThemeProvider theme={theme}>
+                    <Normalize />
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </PersistGate>
         </Provider>
     );
 };
