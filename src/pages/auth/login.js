@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUserWithEmail, loginUserWithProvider } from '../../redux/actions';
 import { GoogleAuthProvider } from '../../../firebase/providers';
 
@@ -7,6 +7,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const error = useSelector((state => state.error.message));
 
     const handleInputChange = (e) => {
         const name = e.target.name;
@@ -36,6 +37,7 @@ const Login = () => {
             <input type="password" name="password" onChange={handleInputChange}/>
             <button onClick={() => loginUser()}>Sign In User</button>
             <button onClick={() => loginUserWithGoogleAuth()}>Sign In With Google</button>
+            {error && <span>{error}</span>}
         </div>
     );
 };

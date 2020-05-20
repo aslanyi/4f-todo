@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { getAuth } from '../../../firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUserWithEmail } from '../../redux/actions';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const error = useSelector((state) => state.error.message);
     const handleInputChange = (e) => {
         const name = e.target.name;
         switch (name) {
@@ -29,6 +29,7 @@ const Register = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" onChange={handleInputChange}/>
             <button onClick={() => registerUser()}>Create User</button>
+            {error && <span>{error}</span>}
         </div>
     );
 };
