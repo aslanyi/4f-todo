@@ -23,7 +23,7 @@ const Home = (props) => {
                 <Input placeholder="With icon" icon="home" isValid={undefined} />
                 <Input placeholder="Search input w-100" icon="search" searchInput isValid={undefined} />
                 <Input placeholder="Validation false with icon" isValid={false} icon="home" />
-                <Checkbox checked={isChecked} label='Deneme' onClick={handleClick} />
+                <Checkbox checked={isChecked} label="Deneme" onClick={handleClick} />
             </div>
         </Fragment>
     );

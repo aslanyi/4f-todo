@@ -1,4 +1,4 @@
-import { addDecorator } from "@storybook/react";
-import themeDecorator from "./themeDecorator";
+import { addDecorator } from '@storybook/react';
+import themeDecorator from './themeDecorator';
 
 addDecorator(themeDecorator);
