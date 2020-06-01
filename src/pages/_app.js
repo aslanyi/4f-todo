@@ -5,6 +5,7 @@ import withRedux from 'next-redux-wrapper';
 import { makeStore } from '../store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import GlobalStyle from '../utils/globalStyle';
 
 const theme = {
     primaryColor: '#0DA5F3',
@@ -28,6 +29,7 @@ const MyApp = ({ pageProps, Component, store }) => {
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <ThemeProvider theme={theme}>
+                    <GlobalStyle />
                     <Normalize />
                     <Component {...pageProps} />
                 </ThemeProvider>
