@@ -21,9 +21,9 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 const StyledCheckbox = styled.div`
     width: 1.5rem;
     height: 1.5rem;
+    box-sizing: border-box;
     border: 2px solid ${(props) => props.theme.borderColor};
     border-radius: 4px;
-    display: inline-block;
     pointer-events: ${(p) => (p.disabled ? 'none' : 'auto')};
     ${HiddenCheckbox}:checked + & {
         background: ${(p) => (p.disabled ? p.theme.borderColor : p.theme.primaryColor)};
@@ -34,17 +34,18 @@ const StyledCheckbox = styled.div`
     }
 `;
 
-const CheckboxLabel = styled.label`
+const CheckboxLabel = styled.span`
     position: absolute;
-    top: 0.6rem;
-    left: 3rem;
+    top: 0;
+    left: 2rem;
+    line-height: 1.5rem;
 `;
 
 const Checkbox = ({ checked, icon, label, ...props }) => (
     <CheckboxContainer>
         <HiddenCheckbox defaultChecked={checked} {...props} />
         <StyledCheckbox checked={checked} {...props}>
-            <Icon icon={icon} style={{ visibility: checked ? 'visible' : 'hidden' }} size="1.6rem" />
+            <Icon icon={icon} style={{ visibility: checked ? 'visible' : 'hidden', width: '100%', height: '100%' }} size="1rem" />
             <CheckboxLabel>{label}</CheckboxLabel>
         </StyledCheckbox>
     </CheckboxContainer>
