@@ -8,20 +8,16 @@ const CheckboxContainer = styled.div`
 `;
 
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-    position: relative;
-    overflow: hidden;
-    display: none;
+    position: absolute;
+    opacity: 0;
+    left: -100%;
 `;
 
 const StyledCheckbox = styled.div`
     width: 1.5rem;
     height: 1.5rem;
     box-sizing: border-box;
+    cursor: pointer;
     border: 2px solid ${(props) => props.theme.borderColor};
     border-radius: 4px;
     pointer-events: ${(p) => (p.disabled ? 'none' : 'auto')};
@@ -39,6 +35,7 @@ const CheckboxLabel = styled.span`
     top: 0;
     left: 2rem;
     line-height: 1.5rem;
+    font-size: 1.5rem;
 `;
 
 const Checkbox = ({ checked, icon, label, ...props }) => (
