@@ -10,7 +10,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {array} data
      * @returns {object} obj
      * */
-    const addDoc = async (collectionName, data) => {
+    this.addDoc = async (collectionName, data) => {
         let obj = {};
         try {
             if (firestore) {
@@ -30,7 +30,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {object} data
      * @returns {boolean} isUpdated
      * */
-    const updateDoc = async (collectionName, docName, data) => {
+    this.updateDoc = async (collectionName, docName, data) => {
         let isUpdated = true;
         try {
             if (firestore) {
@@ -48,7 +48,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {string} docName
      * @returns {boolean} isDeleted
      * */
-    const deleteDoc = async (collectionName, docName) => {
+    this.deleteDoc = async (collectionName, docName) => {
         let isDeleted = true;
         try {
             if (firestore) {
@@ -65,12 +65,12 @@ function FirebaseHelper(firestore, auth) {
      * @param {string} collectionName
      * @returns {array} data
      * */
-    const getCollection = async (collectionName) => {
+    this.getCollection = async (collectionName) => {
         const data = [];
         try {
             if (firestore) {
                 const querySnapshot = await firestore.collection(collectionName).get();
-                querySnapshot.forEach((doc) => (data.push(doc.data())));
+                querySnapshot.forEach((doc) => data.push(doc.data()));
             }
         } catch (e) {
             throw new Error(e.code);
@@ -83,7 +83,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {string} docName
      * @returns {array} data
      * */
-    const getDoc = async (collectionName, docName) => {
+    this.getDoc = async (collectionName, docName) => {
         let data = {};
         try {
             if (firestore) {
@@ -105,7 +105,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {string} password
      * @returns {object} data
      * */
-    const loginUserWithEmailPassword = async (email, password) => {
+    this.loginUserWithEmailPassword = async (email, password) => {
         let data = {};
         try {
             if (auth) {
@@ -122,7 +122,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {object} provider
      * @returns {object} data
      * */
-    const loginUserWithProvider = async (provider) => {
+    this.loginUserWithProvider = async (provider) => {
         let data = {};
         try {
             if (auth) {
@@ -140,7 +140,7 @@ function FirebaseHelper(firestore, auth) {
      * @param {string} password
      * @returns {boolean} registered
      * */
-    const registerUserWithEmailPassword = async (email, password) => {
+    this.registerUserWithEmailPassword = async (email, password) => {
         let registered = false;
         try {
             if (auth) {
@@ -154,18 +154,6 @@ function FirebaseHelper(firestore, auth) {
         }
         return registered;
     };
-
-
-    return {
-        addDoc,
-        getDoc,
-        updateDoc,
-        deleteDoc,
-        getCollection,
-        loginUserWithEmailPassword,
-        loginUserWithProvider,
-        registerUserWithEmailPassword,
-    };
 }
 
 FirebaseHelper.singleton = (() => {
@@ -174,16 +162,13 @@ FirebaseHelper.singleton = (() => {
         const object = new FirebaseHelper(firestore, auth);
         return object;
     }
- 
-    return {
-        getInstance: function (firestore, auth) {
-            if (!instance) {
-                instance = createInstance(firestore, auth);
-            }
-            return instance;
-        },
+
+    return function (firestore, auth) {
+        if (!instance) {
+            instance = createInstance(firestore, auth);
+        }
+        return instance;
     };
 })();
-
 
 export default FirebaseHelper;
