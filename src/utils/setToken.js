@@ -1,23 +1,13 @@
 import { firebase } from '../../firebase';
-import { setCookie } from 'nookies';
+import Cookies from 'js-cookie';
 
-let ctx = null;
-
-export default () => {
-    if (firebase.auth().currentUser) {
-        firebase
-            .auth()
-            .currentUser.getIdToken(true)
-            .then((token) => {
-                console.log('new token created', ctx);
-                setCookie(ctx, 'idToken', token);
-            });
-    }
-};
-
-export const setCtx = (context) => {
-    if (!ctx) {
-        ctx = context;
-        console.log('context created');
+export default async () => {
+    if (typeof window !== 'undefined') {
+        if (firebase.auth().currentUser) {
+            const token = await firebase.auth().currentUser.getIdToken(true);
+            Cookies.set('idToken', token);
+            return;
+        }
+        window.location.href = '/auth/login';
     }
 };

@@ -1,14 +1,13 @@
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { Normalize } from 'styled-normalize';
-import withRedux from 'next-redux-wrapper';
-import { makeStore } from '../store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import GlobalStyle from '../utils/globalStyle';
 import { parseCookies } from 'nookies';
-
-import { verifyToken } from '../redux/user/actions';
+import Cookies from 'js-cookie';
+import withReduxStore from '../components/withReduxStore';
+import { verifyIdToken } from '../redux/actions';
 import { firebaseInit } from '../../firebase';
 import setToken, { setCtx } from '../utils/setToken';
 
@@ -28,16 +27,20 @@ const theme = {
     secondaryFont: 'SF UI Display',
 };
 
+const isServer = () => typeof window === 'undefined';
+
+
 const authHandler = async (token, ctx) => {
-    console.log('token', token);
     if (token) {
-        ctx.store.dispatch(await verifyToken(token));
+        await ctx.reduxStore.dispatch(verifyIdToken(token));
         return;
     }
-    if (ctx.req && !ctx.pathname.includes('login')) {
+    if (ctx.req && !ctx.pathname.includes('login') && isServer()) {
         ctx.res.writeHead(302, { Location: '/auth/login' });
         ctx.res.end();
         return;
+    } else if (!isServer()) {
+        window.location.href = '/auth/login';
     }
 };
 
@@ -45,15 +48,15 @@ firebaseInit();
 
 let persistor;
 
-const MyApp = ({ pageProps, Component, store }) => {
-    if (!persistor) persistor = persistStore(store);
+const MyApp = ({ pageProps, Component, reduxStore }) => {
+    if (!persistor) persistor = persistStore(reduxStore);
 
-    if (store.getState().user.isTokenExpired) {
+    if (reduxStore.getState().user.isTokenExpired) {
         setToken();
     }
 
     return (
-        <Provider store={store}>
+        <Provider store={reduxStore}>
             <PersistGate loading={null} persistor={persistor}>
                 <ThemeProvider theme={theme}>
                     <GlobalStyle />
@@ -67,19 +70,22 @@ const MyApp = ({ pageProps, Component, store }) => {
 
 MyApp.getInitialProps = async ({ ctx, Component }) => {
     let pageProps = {};
-    const { idToken, a } = parseCookies(ctx);
-
-    setCtx(ctx);
+    let token;
     
+    if (isServer()) {
+        const { idToken } = parseCookies(ctx);
+        token = idToken;
+    } else {
+        token = Cookies.get('idToken');
+    }
+
+    await authHandler(token, ctx);
+
     if (Component.getInitialProps) {
         pageProps = await Component.getInitialProps(ctx);
     }
 
-    console.log('initialize');
-
-    authHandler(idToken, ctx);
-
     return { pageProps };
 };
 
-export default withRedux(makeStore)(MyApp);
+export default withReduxStore(MyApp);

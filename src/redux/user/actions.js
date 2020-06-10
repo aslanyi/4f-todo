@@ -6,6 +6,7 @@ import setToken from '../../utils/setToken';
 import http from '../../utils/http';
 
 export const getUser = (user) => {
+    console.log(user);
     return {
         type: types.GET_USER,
         payload: user,
@@ -46,10 +47,9 @@ export const loginUserWithEmail = (email, password, router) => {
         try {
             const { error } = getState();
             const response = await firebaseHelper.loginUserWithEmailPassword(email, password);
-            console.log(response, 'response');
             const user = firebaseUser(response);
             if (Object.keys(user).length > 0) {
-                setToken();
+                await setToken();
                 dispatch(getUser(user));
                 if (error.message) dispatch({ type: 'CLEAR_ERROR' });
                 router.push('/');
@@ -82,7 +82,6 @@ export const registerUserWithEmail = (email, password) => {
         try {
             const { error } = getState();
             const isRegistered = await firebaseHelper.registerUserWithEmailPassword(email, password);
-            console.log(isRegistered);
             if (error.message) dispatch({ type: 'CLEAR_ERROR' });
         } catch (error) {
             dispatch(setError({ message: errorMessages[error.message] }));
@@ -90,10 +89,11 @@ export const registerUserWithEmail = (email, password) => {
     };
 };
 
-export const verifyToken = (idToken) => {
-    return async (dispatch, getState) => {
+export const verifyIdToken = (idToken) => {
+    return async (dispatch) => {
         try {
-           await http('/api/login', 'POST', { idToken });
+            const token = await http('/api/login', 'POST', { idToken });
+            dispatch(getUser({ isTokenExpired: false }));
         } catch (error) {
             dispatch(getUser({ isTokenExpired: true }));
         }

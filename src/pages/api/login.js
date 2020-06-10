@@ -5,7 +5,7 @@ export default async (req, res) => {
         const { idToken } = req.body;
         let response;
         try {
-            response = await admin.auth().verifyIdToken(idToken);
+            response = await admin.auth().verifyIdToken('ASDASD');
         } catch (error) {
             throw new Error(error.code);
         }

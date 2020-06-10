@@ -35,9 +35,7 @@ const Home = (props) => {
 };
 
 Home.getInitialProps = (ctx) => {
-    console.log('home');
-    setCookie(ctx, 'a', 'b');
     return {};
-}
+};
 
 export default Home;

@@ -1,8 +1,11 @@
 import Icon from '../utils/icon';
+import Link from 'next/link';
 const About = () => {
     return (
         <div>
-            <Icon icon="home" />
+            <Link href="/">
+                <a>Home</a>
+            </Link>
         </div>
     );
 };

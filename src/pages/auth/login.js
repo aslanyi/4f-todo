@@ -24,11 +24,11 @@ const Login = ({ ctx }) => {
     };
 
     const loginUser = async () => {
-        dispatch(await loginUserWithEmail(email, password, router));
+        await dispatch(loginUserWithEmail(email, password, router));
     };
 
     const loginUserWithGoogleAuth = async () => {
-        dispatch(await loginUserWithProvider(GoogleAuthProvider));
+        await dispatch(loginUserWithProvider(GoogleAuthProvider));
     };
 
     return (

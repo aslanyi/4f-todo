@@ -3,7 +3,6 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const firebaseInit = () => {
-    console.log('firebase init');
     if (!(firebase.apps.length > 0)) {
         firebase.initializeApp(process.env.firebase);
         return firebase;
