@@ -1,15 +1,12 @@
+import { Normalize } from 'styled-normalize';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import { Normalize } from 'styled-normalize';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
 import GlobalStyle from '../utils/globalStyle';
-import { parseCookies } from 'nookies';
-import Cookies from 'js-cookie';
-import withReduxStore from '../components/withReduxStore';
-import { verifyIdToken } from '../redux/actions';
 import { firebaseInit } from '../../firebase';
-import setToken, { setCtx } from '../utils/setToken';
+import withReduxStore from '../components/withReduxStore';
 
 const theme = {
     primaryColor: '#0DA5F3',
@@ -27,36 +24,14 @@ const theme = {
     secondaryFont: 'SF UI Display',
 };
 
-const isServer = () => typeof window === 'undefined';
-
-
-const authHandler = async (token, ctx) => {
-    if (token) {
-        await ctx.reduxStore.dispatch(verifyIdToken(token));
-        return;
-    }
-    if (ctx.req && !ctx.pathname.includes('login') && isServer()) {
-        ctx.res.writeHead(302, { Location: '/auth/login' });
-        ctx.res.end();
-        return;
-    } else if (!isServer()) {
-        window.location.href = '/auth/login';
-    }
-};
-
 firebaseInit();
 
 let persistor;
 
-const MyApp = ({ pageProps, Component, reduxStore }) => {
-    if (!persistor) persistor = persistStore(reduxStore);
-
-    if (reduxStore.getState().user.isTokenExpired) {
-        setToken();
-    }
-
+const MyApp = ({ pageProps, Component, store }) => {
+    if (!persistor) persistor = persistStore(store);
     return (
-        <Provider store={reduxStore}>
+        <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <ThemeProvider theme={theme}>
                     <GlobalStyle />
@@ -70,22 +45,18 @@ const MyApp = ({ pageProps, Component, reduxStore }) => {
 
 MyApp.getInitialProps = async ({ ctx, Component }) => {
     let pageProps = {};
-    let token;
-    
-    if (isServer()) {
-        const { idToken } = parseCookies(ctx);
-        token = idToken;
-    } else {
-        token = Cookies.get('idToken');
-    }
-
-    await authHandler(token, ctx);
 
     if (Component.getInitialProps) {
         pageProps = await Component.getInitialProps(ctx);
     }
 
     return { pageProps };
+};
+
+MyApp.propTypes = {
+    pageProps: PropTypes.object,
+    Component: PropTypes.func,
+    store: PropTypes.object,
 };
 
 export default withReduxStore(MyApp);

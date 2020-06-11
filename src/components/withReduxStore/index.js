@@ -22,10 +22,10 @@ export default function withReduxStore(App) {
         static async getInitialProps(appContext) {
             // Get or Create the store with `undefined` as initialState
             // This allows you to set a custom default initialState
-            const reduxStore = getOrCreateStore();
+            const store = getOrCreateStore();
 
             // Provide the store to getInitialProps of pages
-            appContext.ctx.reduxStore = reduxStore;
+            appContext.ctx.store = store;
 
             let appProps = {};
             if (typeof App.getInitialProps === 'function') {
@@ -34,17 +34,18 @@ export default function withReduxStore(App) {
 
             return {
                 ...appProps,
-                initialReduxState: reduxStore.getState(),
+                initialReduxState: store.getState(),
             };
         }
 
         constructor(props) {
             super(props);
-            this.reduxStore = getOrCreateStore(props.initialReduxState);
+            // eslint-disable-next-line react/prop-types
+            this.store = getOrCreateStore(props.initialReduxState);
         }
 
         render() {
-            return <App {...this.props} reduxStore={this.reduxStore} />;
+            return <App {...this.props} store={this.store} />;
         }
     };
 }

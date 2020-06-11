@@ -28,7 +28,8 @@ module.exports = {
     "plugins": [
         "react",
         "prettier",
-        "react-hooks"
+        "react-hooks",
+        "import"
     ],
     "rules": {
         "semi":["error", "always"],
@@ -38,6 +39,9 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "no-debugger": 2,
         "react-hooks/rules-of-hooks": "error", 
-        "react-hooks/exhaustive-deps": "warn"
+        "react-hooks/exhaustive-deps": "warn",
+        "import/order": ["error", {
+            "groups": ["builtin", "external", "internal"],
+        }],
     }
 };

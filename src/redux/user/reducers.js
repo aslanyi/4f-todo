@@ -7,7 +7,7 @@ const initialState = {
     email: '',
     emailVerified: false,
     photoURL: '',
-    isTokenExpired: false,
+    auth: false,
     todos: [],
     categories: [],
 };

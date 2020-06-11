@@ -1,9 +1,9 @@
-import { Wrapper } from '../styles/home/styled';
 import { Fragment } from 'react';
-import Input from '../components/Input';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { setCookie } from 'nookies';
+import Input from '../components/Input';
+import withAuth from '../components/withAuth';
+import { Wrapper } from '../styles/home/styled';
 
 const Home = (props) => {
     const user = useSelector((state) => state.user);
@@ -35,7 +35,8 @@ const Home = (props) => {
 };
 
 Home.getInitialProps = (ctx) => {
+    console.log('sa');
     return {};
 };
 
-export default Home;
+export default withAuth(Home);
