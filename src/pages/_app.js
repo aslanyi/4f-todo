@@ -5,6 +5,7 @@ import withRedux from 'next-redux-wrapper';
 import { makeStore } from '../store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import 'react-calendar/dist/Calendar.css';
 
 const theme = {
     primaryColor: '#0DA5F3',
