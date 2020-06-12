@@ -36,6 +36,11 @@ const CheckboxLabel = styled.span`
     left: 2rem;
     line-height: 1.5rem;
     font-size: 1.5rem;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 `;
 
 const Checkbox = ({ checked, icon, label, ...props }) => (
