@@ -20,8 +20,6 @@ export function user(state = initialState, action) {
                 ...action.payload,
             };
         default:
-            return {
-                ...state,
-            };
+            return state;
     }
 }
