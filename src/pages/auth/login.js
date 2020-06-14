@@ -4,11 +4,13 @@ import { useRouter } from 'next/router';
 import { loginUserWithEmail, loginUserWithProvider } from '../../redux/actions';
 import { GoogleAuthProvider } from '../../../firebase/providers';
 
-const Login = ({ ctx }) => {
+
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const error = useSelector((state) => state.error.message);
+    const user = useSelector((state) => state.user);
     const router = useRouter();
 
     const handleInputChange = (e) => {
@@ -30,6 +32,11 @@ const Login = ({ ctx }) => {
     const loginUserWithGoogleAuth = async () => {
         await dispatch(loginUserWithProvider(GoogleAuthProvider));
     };
+
+    if (user &&user.auth) { 
+        router.push('/');
+        return null;
+     }
 
     return (
         <div>

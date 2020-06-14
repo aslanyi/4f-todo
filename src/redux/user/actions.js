@@ -10,6 +10,12 @@ export const getUser = (user) => {
     };
 };
 
+export const clearUser = () => {
+    return {
+        type: types.CLEAR_USER,
+    };
+};
+
 export const fetchUser = () => {
     const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
@@ -78,6 +84,20 @@ export const registerUserWithEmail = (email, password) => {
         try {
             const { error } = getState();
             await firebaseHelper.registerUserWithEmailPassword(email, password);
+            if (error.message) dispatch({ type: 'CLEAR_ERROR' });
+        } catch (error) {
+            dispatch(setError({ message: errorMessages[error.message] }));
+        }
+    };
+};
+
+export const logoutUser = () => {
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
+    return async (dispatch, getState) => {
+        try {
+            const { error } = getState();
+            await firebaseHelper.signOutUser();
+            dispatch(clearUser());
             if (error.message) dispatch({ type: 'CLEAR_ERROR' });
         } catch (error) {
             dispatch(setError({ message: errorMessages[error.message] }));

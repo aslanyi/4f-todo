@@ -29,7 +29,7 @@ firebaseInit();
 let persistor;
 
 const MyApp = ({ pageProps, Component, store }) => {
-    if (!persistor) persistor = persistStore(store);
+    persistor = persistor ?? persistStore(store);
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>

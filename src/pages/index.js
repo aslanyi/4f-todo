@@ -1,16 +1,23 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Input from '../components/Input';
 import withAuth from '../components/withAuth';
 import { Wrapper } from '../styles/home/styled';
+import { logoutUser } from '../redux/user/actions';
 
 const Home = (props) => {
     const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const logOut = async () => {
+        await dispatch(logoutUser());
+    };
+
     return (
         <Fragment>
             <Wrapper>
                 {user.name}
+                <button onClick={() => logOut()}>Log out</button>
                 <h1>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita ipsum, rerum! Aliquid, aut beatae delectus deserunt dolor dolore esse est, facilis in ipsa itaque laborum laudantium minus molestiae natus nemo nihil nostrum nulla officia pariatur perspiciatis praesentium
                     provident qui quisquam recusandae reiciendis rem saepe sapiente sequi suscipit tenetur velit veritatis voluptatum! Blanditiis dolor enim est facilis illo inventore ipsum magnam mollitia pariatur perspiciatis qui, quidem ratione reiciendis. Amet animi autem culpa deserunt dolorem,
@@ -35,7 +42,6 @@ const Home = (props) => {
 };
 
 Home.getInitialProps = (ctx) => {
-    console.log('sa');
     return {};
 };
 

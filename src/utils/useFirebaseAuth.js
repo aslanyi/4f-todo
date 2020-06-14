@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { firebase, firebaseUser } from '../../firebase';
+import { firebaseUser, getAuth } from '../../firebase';
 export default function () {
-    const [user, setCurrentUser] = useState();
+    const [user, setCurrentUser] = useState(getAuth().currentUser);
     const router = useRouter();
     const handleStateChange = (user) => {
         const currentUser = { ...firebaseUser(user), auth: !!user };
@@ -11,11 +11,11 @@ export default function () {
             return;
         }
         setCurrentUser(currentUser);
-        router.push('/auth/login');
+        if (!router.pathname.includes('login')) router.push('/auth/login');
     };
 
     useEffect(() => {
-        const subscribe = firebase.auth().onAuthStateChanged(handleStateChange);
+        const subscribe = getAuth().onAuthStateChanged(handleStateChange);
         return () => subscribe();
     }, []);
 

@@ -154,6 +154,18 @@ function FirebaseHelper(firestore, auth) {
         }
         return registered;
     };
+
+    this.signOutUser = async () => {
+        let isSignedOut = false;
+        try {
+            await auth.signOut();
+            isSignedOut = true;
+        } catch (error) {
+            isSignedOut = false;
+            throw new Error(error.code);
+        }
+        return isSignedOut;
+    };
 }
 
 FirebaseHelper.singleton = (() => {
