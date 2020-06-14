@@ -65,6 +65,46 @@
             "setIdx": 0,
             "setId": 1,
             "iconIdx": 134
+        },
+        {
+            "icon": {
+                "paths": ["M128 448l384 384 704-704"],
+                "attrs": [
+                    {
+                        "fill": "none",
+                        "stroke": "rgb(255, 255, 255)",
+                        "strokeLinejoin": "round",
+                        "strokeLinecap": "round",
+                        "strokeMiterlimit": "4",
+                        "strokeWidth": 192
+                    }
+                ],
+                "width": 1408,
+                "isMulticolor": false,
+                "isMulticolor2": false,
+                "grid": 0,
+                "tags": ["tick"]
+            },
+            "attrs": [
+                {
+                    "fill": "none",
+                    "stroke": "rgb(255, 255, 255)",
+                    "strokeLinejoin": "round",
+                    "strokeLinecap": "round",
+                    "strokeMiterlimit": "4",
+                    "strokeWidth": 192
+                }
+            ],
+            "properties": {
+                "order": 12,
+                "id": 0,
+                "name": "tick",
+                "prevSize": 32,
+                "code": 59648
+            },
+            "setIdx": 0,
+            "setId": 3,
+            "iconIdx": 1
         }
     ],
     "height": 1024,
