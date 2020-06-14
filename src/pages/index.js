@@ -1,8 +1,13 @@
 import { Wrapper } from '../styles/home/styled';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import Input from '../components/Input';
+import Checkbox from '../components/Checkbox';
 
 const Home = (props) => {
+    const [isChecked, setIsChecked] = useState();
+    const handleClick = () => {
+        setIsChecked(!isChecked);
+    };
     return (
         <Fragment>
             <Wrapper>
@@ -18,6 +23,7 @@ const Home = (props) => {
                 <Input placeholder="With icon" icon="home" isValid={undefined} />
                 <Input placeholder="Search input w-100" icon="search" searchInput isValid={undefined} />
                 <Input placeholder="Validation false with icon" isValid={false} icon="home" />
+                <Checkbox checked={isChecked} label="This is a checkbox label" onClick={handleClick} />
             </div>
         </Fragment>
     );
