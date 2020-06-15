@@ -1,6 +1,6 @@
-import * as types from './types';
-import { FirebaseHelper, getAuth, getFirestore, errorMessages } from '../../../firebase';
 import * as collectionName from '../../../firebase/constans';
+import * as types from './types';
+import { FirebaseHelper, errorMessages, firebaseUser, getAuth, getFirestore } from '../../../firebase';
 import { setError } from '../actions';
 
 export const getUser = (user) => {
@@ -10,8 +10,14 @@ export const getUser = (user) => {
     };
 };
 
+export const clearUser = () => {
+    return {
+        type: types.CLEAR_USER,
+    };
+};
+
 export const fetchUser = () => {
-    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const state = getState();
@@ -25,7 +31,7 @@ export const fetchUser = () => {
 };
 
 export const updateUser = (user) => {
-    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const { error } = getState();
@@ -38,22 +44,17 @@ export const updateUser = (user) => {
     };
 };
 
-export const loginUserWithEmail = (email, password) => {
-    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
+export const loginUserWithEmail = (email, password, router) => {
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const { error } = getState();
-            const user = await firebaseHelper.loginUserWithEmailPassword(email, password);
+            const response = await firebaseHelper.loginUserWithEmailPassword(email, password);
+            const user = firebaseUser(response);
             if (Object.keys(user).length > 0) {
-                const userData = {
-                    id: user.uid,
-                    name: user.displayName,
-                    photoURL: user.photoURL,
-                    email: user.email,
-                    emailVerified: user.emailVerified,
-                };
-                dispatch(getUser(userData));
+                dispatch(getUser(user));
                 if (error.message) dispatch({ type: 'CLEAR_ERROR' });
+                router.push('/');
             }
         } catch (error) {
             dispatch(setError({ message: errorMessages[error.message] }));
@@ -62,20 +63,13 @@ export const loginUserWithEmail = (email, password) => {
 };
 
 export const loginUserWithProvider = (provider) => {
-    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const { error } = getState();
             const user = await firebaseHelper.loginUserWithProvider(provider);
             if (Object.keys(user).length > 0) {
-                const userData = {
-                    id: user.uid,
-                    name: user.displayName,
-                    photoURL: user.photoURL,
-                    email: user.email,
-                    emailVerified: user.emailVerified,
-                };
-                dispatch(getUser(userData));
+                dispatch(getUser(user));
                 if (error.message) dispatch({ type: 'CLEAR_ERROR' });
             }
         } catch (error) {
@@ -85,12 +79,25 @@ export const loginUserWithProvider = (provider) => {
 };
 
 export const registerUserWithEmail = (email, password) => {
-    const firebaseHelper = FirebaseHelper.singleton.getInstance(getFirestore(), getAuth());
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const { error } = getState();
-            const isRegistered = await firebaseHelper.registerUserWithEmailPassword(email, password);
-            console.log(isRegistered);
+            await firebaseHelper.registerUserWithEmailPassword(email, password);
+            if (error.message) dispatch({ type: 'CLEAR_ERROR' });
+        } catch (error) {
+            dispatch(setError({ message: errorMessages[error.message] }));
+        }
+    };
+};
+
+export const logoutUser = () => {
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
+    return async (dispatch, getState) => {
+        try {
+            const { error } = getState();
+            await firebaseHelper.signOutUser();
+            dispatch(clearUser());
             if (error.message) dispatch({ type: 'CLEAR_ERROR' });
         } catch (error) {
             dispatch(setError({ message: errorMessages[error.message] }));
