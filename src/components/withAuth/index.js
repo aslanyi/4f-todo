@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import useFirebaseAuth from '../../utils/useFirebaseAuth';
-import { getUser } from '../../redux/actions';
+import useFirebaseAuth from '@utils/useFirebaseAuth';
+import { getUser } from '@redux/actions';
 
 const withAuth = (Component) => {
     const WrappedComponent = (props) => {
         const user = useFirebaseAuth();
-        const dispatch = useDispatch();    
+        const dispatch = useDispatch();
         if (user && user.auth) {
             dispatch(getUser(user));
             return <Component {...props} />;

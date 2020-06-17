@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { loginUserWithEmail, loginUserWithProvider } from '../../redux/actions';
-import { GoogleAuthProvider } from '../../../firebase/providers';
+import { GoogleAuthProvider } from '@firebase/providers';
+import { loginUserWithEmail, loginUserWithProvider } from '@redux/actions';
 
 const Login = () => {
     const [email, setEmail] = useState('');

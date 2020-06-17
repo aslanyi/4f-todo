@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Icon from '../../utils/icon';
 import PropTypes from 'prop-types';
+import Icon from '../../utils/icon';
 
 const BasicInput = styled.input`
     width: 100%;

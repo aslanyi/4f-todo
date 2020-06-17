@@ -1,7 +1,8 @@
-import * as collectionName from '../../../firebase/constans';
-import * as types from './types';
-import { FirebaseHelper, errorMessages, firebaseUser, getAuth, getFirestore } from '../../../firebase';
-import { setError } from '../actions';
+import { FirebaseHelper, errorMessages, firebaseUser, getAuth, getFirestore } from '@firebase/index';
+import * as collectionName from '@firebase/constans';
+
+import { setError } from '@redux/actions';
+import * as types from '@redux/user/types';
 
 export const getUser = (user) => {
     return {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUserWithEmail } from '../../redux/actions';
+import { registerUserWithEmail } from '@redux/actions';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -25,9 +25,9 @@ const Register = () => {
     return (
         <div>
             <label htmlFor="email">E-mail</label>
-            <input type="email" name='email' onChange={handleInputChange}/>
+            <input type="email" name="email" onChange={handleInputChange} />
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" onChange={handleInputChange}/>
+            <input type="password" name="password" onChange={handleInputChange} />
             <button onClick={() => registerUser()}>Create User</button>
             {error && <span>{error}</span>}
         </div>
