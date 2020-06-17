@@ -7,6 +7,7 @@ const firebaseInit = () => {
         firebase.initializeApp(process.env.firebase);
         return firebase;
     }
+    return firebase;
 };
 
 const getFirestore = () => {

@@ -18,7 +18,7 @@ const defaultStyles = {
 };
 
 const Modal = ({ isOpen, onAfterOpen, onAfterClose, onRequestClose, children, customStyles }) => {
-    const style = customStyles ?  _.merge({}, defaultStyles, customStyles) : defaultStyles;
+    const style = customStyles ? _.merge({}, defaultStyles, customStyles) : defaultStyles;
     return (
         <ReactModal style={style} isOpen={isOpen} onAfterOpen={onAfterOpen} onAfterClose={onAfterClose} onRequestClose={onRequestClose}>
             {children}

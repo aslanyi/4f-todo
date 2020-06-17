@@ -1,11 +1,12 @@
+import { Normalize } from 'styled-normalize';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import { Normalize } from 'styled-normalize';
-import withRedux from 'next-redux-wrapper';
-import { makeStore } from '../store';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
-import GlobalStyle from '../utils/globalStyle';
+import GlobalStyle from '@utils/globalStyle';
+import withReduxStore from '@components/withReduxStore';
+import { firebaseInit } from '@firebase/index';
 
 const theme = {
     primaryColor: '#0DA5F3',
@@ -23,8 +24,12 @@ const theme = {
     secondaryFont: 'SF UI Display',
 };
 
+firebaseInit();
+
+let persistor;
+
 const MyApp = ({ pageProps, Component, store }) => {
-    const persistor = persistStore(store);
+    persistor = persistor ?? persistStore(store);
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
@@ -40,10 +45,18 @@ const MyApp = ({ pageProps, Component, store }) => {
 
 MyApp.getInitialProps = async ({ ctx, Component }) => {
     let pageProps = {};
+
     if (Component.getInitialProps) {
         pageProps = await Component.getInitialProps(ctx);
     }
+
     return { pageProps };
 };
 
-export default withRedux(makeStore)(MyApp);
+MyApp.propTypes = {
+    pageProps: PropTypes.object,
+    Component: PropTypes.func,
+    store: PropTypes.object,
+};
+
+export default withReduxStore(MyApp);

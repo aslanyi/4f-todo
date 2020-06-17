@@ -12,7 +12,7 @@ export const WithOpen = () => {
     return (
         <div>
             <button onClick={() => setIsOpen(true)}>Open Modal</button>
-            <Modal customStyles={{content: {border: '1px solid white'}}} isOpen={isOpen} onRequestClose={handleCloseModal}>
+            <Modal customStyles={{ content: { border: '1px solid white' } }} isOpen={isOpen} onRequestClose={handleCloseModal}>
                 <div style={{ display: 'flex' }}>
                     <Input placeholder="Ne yapacaksın?" />
                     <button>Hatırlatıcı Ekle</button>
@@ -20,23 +20,23 @@ export const WithOpen = () => {
                 </div>
                 <Input placeholder="Not" />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <select style={{width: '100%'}}>
+                    <select style={{ width: '100%' }}>
                         <option value="a">A</option>
                         <option value="a">B</option>
                         <option value="a">C</option>
                     </select>
-                    <select style={{width: '100%'}}>
+                    <select style={{ width: '100%' }}>
                         <option value="a">A</option>
                         <option value="a">B</option>
                         <option value="a">C</option>
                     </select>
-                    <select style={{width: '100%'}}>
+                    <select style={{ width: '100%' }}>
                         <option value="a">A</option>
                         <option value="a">B</option>
                         <option value="a">C</option>
                     </select>
                 </div>
-                <button style={{width: '100%'}}>Görevlere Ekle</button>
+                <button style={{ width: '100%' }}>Görevlere Ekle</button>
             </Modal>
         </div>
     );

@@ -1,4 +1,4 @@
-import { firebase } from './index';
+import { firebase } from '@firebase/index';
 
 export const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export const FacebookAuthProvider = new firebase.auth.FacebookAuthProvider();
