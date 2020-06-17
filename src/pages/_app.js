@@ -4,9 +4,9 @@ import { persistStore } from 'redux-persist';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import GlobalStyle from '../utils/globalStyle';
-import { firebaseInit } from '../../firebase';
-import withReduxStore from '../components/withReduxStore';
+import GlobalStyle from '@utils/globalStyle';
+import withReduxStore from '@components/withReduxStore';
+import { firebaseInit } from '@firebase/index';
 
 const theme = {
     primaryColor: '#0DA5F3',

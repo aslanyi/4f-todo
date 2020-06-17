@@ -1,11 +1,11 @@
 import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from '../components/Input';
-import Checkbox from '../components/Checkbox';
-import withAuth from '../components/withAuth';
-import { Wrapper } from '../styles/home/styled';
-import { logoutUser } from '../redux/user/actions';
+import Input from '@components/Input';
+import Checkbox from '@components/Checkbox';
+import withAuth from '@components/withAuth';
+import { Wrapper } from '@styles/home/styled';
+import { logoutUser } from '@redux/user/actions';
 
 const Home = (props) => {
     const [isChecked, setIsChecked] = useState();
@@ -36,7 +36,7 @@ const Home = (props) => {
                     <a>About</a>
                 </Link>
             </Wrapper>
-            <Wrapper>Components</Wrapper>
+            <Wrapper>components</Wrapper>
             <div>
                 <Input placeholder="Validation true basic" isValid={true} />
                 <Input placeholder="With icon" icon="home" isValid={undefined} />

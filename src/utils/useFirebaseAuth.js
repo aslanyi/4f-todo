@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { firebaseUser, getAuth } from '../../firebase';
+import { firebaseUser, getAuth } from '@firebase/index';
 export default function () {
     const [user, setCurrentUser] = useState(getAuth().currentUser);
     const router = useRouter();
