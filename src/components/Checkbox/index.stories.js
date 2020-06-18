@@ -16,6 +16,6 @@ export const Checked = () => <Checkbox checked={true} icon="tick" />;
 
 export const Unchecked = () => <Checkbox checked={false} icon="tick" />;
 
-export const Disabled = () => <Checkbox disabled={true} />;
+export const Disabled = () => <Checkbox disabled={true} checked={false} />;
 
 export const DisabledChecked = () => <Checkbox disabled={true} checked />;

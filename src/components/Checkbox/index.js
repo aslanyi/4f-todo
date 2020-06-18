@@ -43,25 +43,27 @@ const CheckboxLabel = styled.span`
     -webkit-touch-callout: none;
 `;
 
-const Checkbox = ({ checked, icon, label, ...props }) => (
+const Checkbox = ({ checked, icon, iconColor, label, ...props }) => (
     <CheckboxContainer>
         <HiddenCheckbox defaultChecked={checked} {...props} />
         <StyledCheckbox checked={checked} {...props}>
-            <Icon icon={icon} style={{ visibility: checked ? 'visible' : 'hidden', width: '100%', height: '100%' }} size="1rem" />
+            <Icon icon={icon} color={iconColor} style={{ visibility: checked ? 'visible' : 'hidden', width: '100%', height: '100%' }} size="1rem" />
             <CheckboxLabel>{label}</CheckboxLabel>
         </StyledCheckbox>
     </CheckboxContainer>
 );
 
 Checkbox.propTypes = {
-    checked: propTypes.bool.isRequired,
+    checked: propTypes.bool,
     icon: propTypes.string,
     label: propTypes.string,
+    iconColor: propTypes.string,
 };
 
 Checkbox.defaultProps = {
     icon: 'tick',
     label: '',
+    iconColor: 'white',
 };
 
 export default Checkbox;
