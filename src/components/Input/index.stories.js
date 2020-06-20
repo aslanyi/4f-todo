@@ -3,8 +3,8 @@ import Input from './index';
 
 export default { title: 'Input' };
 
-export const withPlaceholder = () => <Input placeholder="saa" />;
+export const withPlaceholderValid = () => <Input placeholder="saa" isValid />;
 
-export const withIcon = () => <Input icon="home" />;
+export const withIcon = () => <Input icon="account" iconSize="30px" />;
 
-export const withIconAndPlaceholder = () => <Input icon="home" placeholder="Welcome..." />;
+export const withIconAndPlaceholder = () => <Input icon="password" placeholder="Enter your password." iconSize="30px" iconColor="red" />;

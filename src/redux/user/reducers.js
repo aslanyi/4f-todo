@@ -1,4 +1,4 @@
-import { GET_USER } from './types';
+import { GET_USER, CLEAR_USER } from './types';
 
 const initialState = {
     id: '',
@@ -7,8 +7,8 @@ const initialState = {
     email: '',
     emailVerified: false,
     photoURL: '',
+    auth: false,
     todos: [],
-    token: '',
     categories: [],
 };
 
@@ -19,6 +19,8 @@ export function user(state = initialState, action) {
                 ...state,
                 ...action.payload,
             };
+        case CLEAR_USER:
+            return { ...initialState };
         default:
             return state;
     }

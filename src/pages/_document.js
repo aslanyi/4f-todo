@@ -4,7 +4,6 @@ import { ServerStyleSheet } from 'styled-components';
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
         const initialProps = await Document.getInitialProps(ctx);
-
         const styleSheet = new ServerStyleSheet();
         const page = ctx.renderPage((App) => (props) => styleSheet.collectStyles(<App {...props} />));
 
