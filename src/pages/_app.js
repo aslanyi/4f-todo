@@ -32,7 +32,16 @@ const MyApp = ({ pageProps, Component, store }) => {
     persistor = persistor ?? persistStore(store);
     return (
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
+            <PersistGate
+                loading={
+                    <ThemeProvider theme={theme}>
+                        <GlobalStyle />
+                        <Normalize />
+                        <Component {...pageProps} />
+                    </ThemeProvider>
+                }
+                persistor={persistor}
+            >
                 <ThemeProvider theme={theme}>
                     <GlobalStyle />
                     <Normalize />
