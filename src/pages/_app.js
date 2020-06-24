@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '@utils/globalStyle';
 import withReduxStore from '@components/withReduxStore';
 import { firebaseInit } from '@firebase/index';
+import '../../public/Calendar.css';
 
 const theme = {
     primaryColor: '#0DA5F3',
