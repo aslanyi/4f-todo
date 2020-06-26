@@ -3,22 +3,35 @@ import { ServerStyleSheet } from 'styled-components';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
-        const initialProps = await Document.getInitialProps(ctx);
-        const styleSheet = new ServerStyleSheet();
-        const page = ctx.renderPage((App) => (props) => styleSheet.collectStyles(<App {...props} />));
+        const sheet = new ServerStyleSheet();
+        const originalRenderPage = ctx.renderPage;
 
-        const styleTags = styleSheet.getStyleElement();
+        try {
+            ctx.renderPage = () =>
+                originalRenderPage({
+                    enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
+                });
 
-        return { ...page, styleTags };
+            const initialProps = await Document.getInitialProps(ctx);
+            return {
+                ...initialProps,
+                styles: (
+                    <>
+                        {initialProps.styles}
+                        {sheet.getStyleElement()}
+                    </>
+                ),
+            };
+        } finally {
+            sheet.seal();
+        }
     }
 
     render() {
-        const { styleTags } = this.props;
         return (
             <Html>
                 <Head>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                    {styleTags}
                 </Head>
                 <body>
                     <Main />

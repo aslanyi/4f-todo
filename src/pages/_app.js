@@ -2,12 +2,14 @@ import { Normalize } from 'styled-normalize';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '@utils/globalStyle';
 import withReduxStore from '@components/withReduxStore';
 import { firebaseInit } from '@firebase/index';
 import '../../public/Calendar.css';
+import useFirebaseAuth from 'src/utils/useFirebaseAuth';
+import { getUser } from 'src/redux/user/actions';
 
 const theme = {
     primaryColor: '#0DA5F3',
@@ -34,11 +36,13 @@ const MyApp = ({ pageProps, Component, store }) => {
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <ThemeProvider theme={theme}>
-                    <GlobalStyle />
-                    <Normalize />
-                    <Component {...pageProps} />
-                </ThemeProvider>
+                {() => (
+                    <ThemeProvider theme={theme}>
+                        <GlobalStyle />
+                        <Normalize />
+                        <Component {...pageProps} />
+                    </ThemeProvider>
+                )}
             </PersistGate>
         </Provider>
     );
