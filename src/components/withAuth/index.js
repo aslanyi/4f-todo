@@ -11,7 +11,7 @@ const withAuth = (Component) => {
             dispatch(getUser(user));
             return <Component {...props} />;
         }
-        return null;
+        return <div>Loading...</div>;
     };
 
     if (Component.getInitialProps) {
