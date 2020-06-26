@@ -8,7 +8,7 @@ const SidebarContent = ({ isExpanded, handleClick }) => {
             <Header isExpanded={isExpanded}>
                 <h2>4ftodo</h2>
                 <IconButton isOpen={isExpanded} onClick={handleClick}>
-                    <Icon icon="rightarrow" />
+                    <Icon icon="rightarrow" size={28} />
                 </IconButton>
             </Header>
         </div>
