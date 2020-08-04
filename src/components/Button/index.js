@@ -4,13 +4,13 @@ import Icon from '../../utils/icon';
 
 const StyledButton = styled.button`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
 
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
+    width: 100%;
+    height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 10px;
     
     color: ${(props) => props.theme.secondaryColor};
     background-color: ${(props) => props.theme.primaryColor};
@@ -36,22 +36,23 @@ const StyledButton = styled.button`
             :hover {
                 background-color: ${(props) => props.theme.secondaryColor};
             }
+            justify-content:flex-start;
         `};
 `;
 
 const ButtonText = styled.span`
-    margin: auto;
     line-height: 2.2rem;
+    margin:0 auto;
     ${(props) =>
         props.socialButton &&
         css`
-            margin-left: 40px;
+            align-self:center;
             order: 1;
         `};
 `;
 
 const ButtonDivider = styled.div`
-    height: calc(${(props) => props.height} - 40%);
+    height:100%;
     border-right: 1px solid ${(props) => props.theme.borderColor}80;
 
     ${(props) =>
@@ -66,14 +67,13 @@ const Button = ({ text, icon, iconSize, iconColor, ...props }) => {
         <StyledButton {...props}>
             <ButtonText {...props}>{text}</ButtonText>
             {icon ? <ButtonDivider {...props} /> : null }
-            <Icon icon={icon} size={iconSize} color={iconColor} style={{ margin: props.socialButton ? '0 15px' : '0 auto' }} />
+            <Icon icon={icon} size={iconSize} color={iconColor} style={{ margin: props.socialButton ? '0 15px' : '0 auto' }}/>
         </StyledButton>
     );
 };
 
 Button.propTypes = {
     text: PropTypes.string,
-    width: PropTypes.string,
     icon: PropTypes.string,
     iconSize: PropTypes.string,
     iconColor: PropTypes.string,
