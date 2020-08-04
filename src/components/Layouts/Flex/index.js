@@ -37,8 +37,6 @@ Item.defaultProps = {
     grow: 0,
     shrink: 1,
     basis: 'auto',
-    alignSelf: 'flex-start',
-    width: '100%',
 };
 
 Item.propTypes = {

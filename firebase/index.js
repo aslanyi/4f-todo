@@ -1,5 +1,7 @@
-import { firebaseInit, getFirestore, getAuth, firebase } from '@firebase/firebase';
-import { errorMessages } from '@firebase/errors';
-import firebaseUser from '@firebase/user';
-import FirebaseHelper from '@firebase/helper';
-export { firebaseInit, getFirestore, getAuth, firebase, FirebaseHelper, errorMessages, firebaseUser };
+import { firebaseInit, getFirestore, getAuth, firebase } from './firebase';
+import { errorMessages } from './errors';
+import firebaseUser from './user';
+import FirebaseHelper from './helper';
+import * as persistTypes from './persistTypes';
+import * as providers from './providers';
+export { firebaseInit, getFirestore, getAuth, firebase, FirebaseHelper, errorMessages, firebaseUser, persistTypes, providers };

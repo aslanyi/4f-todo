@@ -105,11 +105,14 @@ function FirebaseHelper(firestore, auth) {
      * @param {string} password
      * @returns {object} data
      * */
-    this.loginUserWithEmailPassword = async (email, password) => {
+    this.loginUserWithEmailPassword = async (email, password, persistType) => {
         let data = {};
         try {
             if (auth) {
-                const { user } = await auth.signInWithEmailAndPassword(email, password);
+                // Persistence added for remember me feature. It persists user state or not depends on user choice.
+                const { user } = await auth.setPersistence(persistType).then(() => {
+                    return auth.signInWithEmailAndPassword(email, password);
+                });
                 data = user;
             }
         } catch (e) {
@@ -165,6 +168,18 @@ function FirebaseHelper(firestore, auth) {
             throw new Error(error.code);
         }
         return isSignedOut;
+    };
+
+    this.sendPasswordResetEmail = async (email) => {
+        let sent = false;
+        try {
+            await auth.sendPasswordResetEmail(email);
+            sent = true;
+        } catch (error) {
+            sent = false;
+            throw new Error(error.code);
+        }
+        return sent;
     };
 }
 

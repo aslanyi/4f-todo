@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Icon from '../../utils/icon';
@@ -88,14 +88,15 @@ Input.defaultProps = {
     iconColor: '#999',
 };
 
-function Input(props) {
+function Input({ register, required, ...props }) {
+    const ref = register ? register({ required }) : null;
     return props.icon ? (
         <Container>
             <Icon icon={props.icon} size={props.iconSize} color={props.iconColor} style={iconStyle} />
-            <BasicInput {...props} />
+            <BasicInput {...props} ref={ref} />
         </Container>
     ) : (
-        <BasicInput {...props} />
+        <BasicInput {...props} ref={ref} />
     );
 }
 

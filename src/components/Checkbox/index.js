@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import propTypes from 'prop-types';
 import Icon from '../../utils/icon';
 
@@ -21,10 +21,13 @@ const StyledCheckbox = styled.div`
     border: 2px solid ${(props) => props.theme.borderColor};
     border-radius: 4px;
     pointer-events: ${(p) => (p.disabled ? 'none' : 'auto')};
-    ${HiddenCheckbox}:checked + & {
-        background: ${(p) => (p.disabled ? p.theme.borderColor : p.theme.primaryColor)};
-        border-color: ${(p) => (p.disabled ? p.theme.borderColor : p.theme.primaryColor)};
-    }
+    ${(p) =>
+        p.checked
+            ? css`
+                  background: ${(p) => (p.disabled ? p.theme.borderColor : p.theme.primaryColor)};
+                  border-color: ${(p) => (p.disabled ? p.theme.borderColor : p.theme.primaryColor)};
+              `
+            : ''}
     &:hover {
         border-color: ${(props) => props.theme.primaryColor};
     }

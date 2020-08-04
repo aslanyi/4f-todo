@@ -1,4 +1,4 @@
-import { FirebaseHelper, errorMessages, firebaseUser, getAuth, getFirestore } from '@firebase/index';
+import { FirebaseHelper, errorMessages, firebaseUser, getAuth, getFirestore, firebase } from '@firebase/index';
 import * as collectionName from '@firebase/constans';
 
 import { setError } from '@redux/actions';
@@ -45,12 +45,12 @@ export const updateUser = (user) => {
     };
 };
 
-export const loginUserWithEmail = (email, password, router) => {
+export const loginUserWithEmail = (email, password, router, persistence = firebase.auth.Auth.Persistence.NONE) => {
     const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const { error } = getState();
-            const response = await firebaseHelper.loginUserWithEmailPassword(email, password);
+            const response = await firebaseHelper.loginUserWithEmailPassword(email, password, persistence);
             const user = firebaseUser(response);
             if (Object.keys(user).length > 0) {
                 dispatch(getUser(user));
@@ -99,6 +99,19 @@ export const logoutUser = () => {
             const { error } = getState();
             await firebaseHelper.signOutUser();
             dispatch(clearUser());
+            if (error.message) dispatch({ type: 'CLEAR_ERROR' });
+        } catch (error) {
+            dispatch(setError({ message: errorMessages[error.message] }));
+        }
+    };
+};
+
+export const sendResetPassword = () => {
+    const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
+    return async (dispatch, getState) => {
+        try {
+            const { error, user } = getState();
+            await firebaseHelper.sendResetPassword(user.email);
             if (error.message) dispatch({ type: 'CLEAR_ERROR' });
         } catch (error) {
             dispatch(setError({ message: errorMessages[error.message] }));
