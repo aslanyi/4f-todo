@@ -51,9 +51,7 @@ export const loginUserWithEmail = (email, password, router, persistence = fireba
         try {
             const { error } = getState();
             const response = await firebaseHelper.loginUserWithEmailPassword(email, password, persistence);
-            const user = firebaseUser(response);
-            if (Object.keys(user).length > 0) {
-                dispatch(getUser(user));
+            if (Object.keys(response).length > 0) {
                 if (error.message) dispatch({ type: 'CLEAR_ERROR' });
                 router.push('/');
             }
@@ -63,15 +61,15 @@ export const loginUserWithEmail = (email, password, router, persistence = fireba
     };
 };
 
-export const loginUserWithProvider = (provider) => {
+export const loginUserWithProvider = (provider, router) => {
     const firebaseHelper = FirebaseHelper.singleton(getFirestore(), getAuth());
     return async (dispatch, getState) => {
         try {
             const { error } = getState();
-            const user = await firebaseHelper.loginUserWithProvider(provider);
-            if (Object.keys(user).length > 0) {
-                dispatch(getUser(user));
+            const response = await firebaseHelper.loginUserWithProvider(provider);
+            if (Object.keys(response).length > 0) {
                 if (error.message) dispatch({ type: 'CLEAR_ERROR' });
+                router.push('/');
             }
         } catch (error) {
             dispatch(setError({ message: errorMessages[error.message] }));

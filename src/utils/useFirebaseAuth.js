@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { firebaseUser, getAuth } from '@firebase/index';
 export default function () {
-    const [user, setCurrentUser] = useState(getAuth().currentUser);
+    const [user, setCurrentUser] = useState();
     const router = useRouter();
     const handleStateChange = (user) => {
         const currentUser = { ...firebaseUser(user), auth: !!user };
@@ -18,6 +18,6 @@ export default function () {
         const subscribe = getAuth().onAuthStateChanged(handleStateChange);
         return () => subscribe();
     }, []);
-
+    
     return user;
 }

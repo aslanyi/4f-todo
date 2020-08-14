@@ -5,6 +5,7 @@ import Flex from '@components/Layouts/Flex';
 
 import Icon from 'src/utils/icon';
 import { Wrapper, Card, Container, DescriptionText, IconButton } from '@styles/auth/layout/styled';
+import { useRouter } from 'next/router';
 
 const providerList = [
     {
@@ -29,14 +30,14 @@ const providerList = [
 
 const AuthLayout = ({ children }) => {
     const dispatch = useDispatch();
-
+    const router = useRouter();
     const loginUser = async (icon) => {
         switch (icon) {
             case 'google':
-                await dispatch(loginUserWithProvider(providers.GoogleAuthProvider));
+                await dispatch(loginUserWithProvider(providers.GoogleAuthProvider, router));
                 break;
             case 'facebook':
-                await dispatch(loginUserWithProvider(providers.FacebookAuthProvider));
+                await dispatch(loginUserWithProvider(providers.FacebookAuthProvider, router));
                 break;
             case 'twitter':
                 break;

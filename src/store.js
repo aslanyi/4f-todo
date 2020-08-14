@@ -8,7 +8,7 @@ import rootReducer from './redux/reducers';
 const persistConfig = {
     key: 'primary',
     storage,
-    whitelist: ['user'],
+    blackList: ['user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
