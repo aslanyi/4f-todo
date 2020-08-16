@@ -1,4 +1,4 @@
-import { FirebaseHelper, errorMessages, firebaseUser, getAuth, getFirestore, firebase } from '@firebase/index';
+import { FirebaseHelper, errorMessages, getAuth, getFirestore, firebase } from '@firebase/index';
 import * as collectionName from '@firebase/constans';
 
 import { setError } from '@redux/actions';

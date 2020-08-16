@@ -9,22 +9,10 @@ import { useRouter } from 'next/router';
 
 const providerList = [
     {
-        id: 1,
-        icon: 'facebook',
-        size: 40,
-        text: 'Facebook ile giriş yap',
-    },
-    {
         id: 2,
         icon: 'google',
         size: 40,
         text: 'Google ile giriş yap',
-    },
-    {
-        id: 3,
-        icon: 'twitter',
-        size: 40,
-        text: 'Twitter ile giriş yap',
     },
 ];
 
